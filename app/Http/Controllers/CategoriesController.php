@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Category;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,8 +25,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        // Return a particular view create post
-        return view('admin.posts.create'); //Location of the file (directory)
+        // Return view when creating categories
+        return view('admin.categories.create');
     }
 
     /**
@@ -35,16 +37,20 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        // Define on how post being stored
-        // Validate data
-        $this->validate($request,[
-            // Receiving an array of the rules use to validate
-            'title' => 'required',
-            'featured' => 'required|image',
-            'content' => 'required'
+        // Populate and validate data
+        $this->validate($request, [
+            'name' => 'required'
         ]);
 
         // dd($request->all());
+
+        // Create a new category
+        $category = new Category;
+
+        $category->name = $request->name;
+        $category->save();
+
+        return redirect()->back();
     }
 
     /**

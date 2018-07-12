@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Session;
 use App\Category;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        // Return view created for categories (all category list)
+        return view('admin.categories.index')->with('categories', Category::all());
     }
 
     /**
@@ -50,7 +51,9 @@ class CategoriesController extends Controller
         $category->name = $request->name;
         $category->save();
 
-        return redirect()->back();
+        Session::flash('success', 'You Successfully Created a New Category.');
+
+        return redirect()->route('categories');
     }
 
     /**
@@ -72,7 +75,10 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Editing the category
+        $category = Category::find($id);
+
+        return view('admin.categories.edit')->with('category', $category);
     }
 
     /**
@@ -84,7 +90,16 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Updating category
+        $category = Category::find($id);
+
+        $category->name = $request->name;
+
+        $category->save();
+
+        Session::flash('success', 'You Successfully Updated the Category.');
+
+        return redirect()->route('categories');
     }
 
     /**
@@ -95,6 +110,14 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Delete category
+        $category = Category::find($id);
+
+        $category->delete();
+
+        Session::flash('success', 'You Successfully Deleted a Category.');
+
+        return redirect()->route('categories');
+
     }
 }

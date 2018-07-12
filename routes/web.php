@@ -53,6 +53,29 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
         'as' => 'category.store'
     ]);
 
+    // Get data from categories table in db
+    Route::get('/categories', [
+        'uses' => 'CategoriesController@index',
+        'as' => 'categories'
+    ]);
+
+    // Route for editing categories
+    Route::get('/category/edit/{id}', [
+        'uses' => 'CategoriesController@edit',
+        'as' => 'category.edit'
+    ]);
+
+    // Route for deleting categories
+    Route::get('/category/delete/{id}', [
+        'uses' => 'CategoriesController@destroy',
+        'as' => 'category.delete'
+    ]);
+
+    // Route Update
+    Route::post('/category/update/{id}', [
+        'uses' => 'CategoriesController@update',
+        'as' => 'category.update'
+    ]);
 });
 
 

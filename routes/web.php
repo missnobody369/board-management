@@ -53,6 +53,13 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
         'as' => 'posts'
     ]);
 
+    // Create route for viewing trashed posts
+    Route::get('/post/trashed', [
+        'uses' =>  'PostsController@trashed',
+        'as' => 'posts.trashed'
+    ]);
+
+
     // Create route for category
     Route::get('/category/create', [
         'uses' => 'CategoriesController@create',

@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ asset('/js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -91,6 +92,9 @@
                                 <a href="{{route('posts')}}">All Posts</a>
                             </li>
                             <li class="list-group-item">
+                                <a href="{{route('posts.trashed')}}">All Trashed Posts</a>
+                            </li>
+                            <li class="list-group-item">
                                 <a href="{{route('category.create')}}">Create New Category</a>
                             </li>
                             <li class="list-group-item">
@@ -108,7 +112,7 @@
         </main>
     </div>
 
-    <script src="/js/app.js"></script>
+    
     <script src="{{ asset('js/toastr.min.js') }}"></script>
 
     <script>
@@ -120,5 +124,7 @@
             toastr.info("{{ Session::get('info') }}")
         @endif
     </script>
+
+    
 </body>
 </html>

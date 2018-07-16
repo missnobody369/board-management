@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Session;
 use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+        // To view all post available and created
+        return view ('admin.posts.index')->with('posts', Post::all());
     }
 
     /**
@@ -26,6 +28,15 @@ class PostsController extends Controller
      */
     public function create()
     {
+
+        $categories = Category::all();
+
+        if($categories->count() == 0){
+            // Must have a categories before creating post
+            Session::flash('info', 'You must have some categories created first in order to proceed.');
+
+            return redirect()->back();
+        }
         // Return a particular view create post
         return view('admin.posts.create')->with('categories', Category::all()); //Location of the file (directory)
         // Passing all categories
@@ -61,10 +72,13 @@ class PostsController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'featured' => 'uploads/posts/' . $featured_new_name,
-            'category_id' => $request->$category_id
+            'category_id' => $request->category_id,
+            'slug' => str_slug($request->title)// Create new Laravel 5.3 project (slug ver) project ===> create-new-laravel-5-3-project
         ]);
 
         Session::flash('success','Post Create Successfully!.');
+
+        return redirect()->back();
     }
 
     /**
@@ -109,6 +123,12 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        Session::flash('success', 'The post was just trashed.');
+
+        return redirect()->back();
     }
 }

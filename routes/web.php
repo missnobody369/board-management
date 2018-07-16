@@ -41,6 +41,18 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
         'as' => 'post.store'
     ]);
 
+    // Create route for delete or soft trash post
+    Route::get('/post/delete/{id}', [
+        'uses' => 'PostsController@destroy',
+        'as' => 'post.delete'
+    ]);
+
+    // Create route for viewing post
+    Route::get('/post', [
+        'uses' =>  'PostsController@index',
+        'as' => 'posts'
+    ]);
+
     // Create route for category
     Route::get('/category/create', [
         'uses' => 'CategoriesController@create',

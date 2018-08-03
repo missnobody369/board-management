@@ -32,19 +32,19 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
     // Create a new post route
     Route::get('/post/create', [
         'uses' => 'PostsController@create',
-        'as' => 'post.create'
+        'as' => 'posts.create'
     ]);
 
     // Create route for storing post
     Route::post('/post/store', [
         'uses' => 'PostsController@store',
-        'as' => 'post.store'
+        'as' => 'posts.store'
     ]);
 
     // Create route for delete or soft trash post
     Route::get('/post/delete/{id}', [
         'uses' => 'PostsController@destroy',
-        'as' => 'post.delete'
+        'as' => 'posts.delete'
     ]);
 
     // Create route for viewing post
@@ -59,6 +59,29 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
         'as' => 'posts.trashed'
     ]);
 
+    // Create route for permanently delete posts
+    Route::get('/post/kill/{id}', [
+        'uses' =>  'PostsController@kill',
+        'as' => 'posts.kill'
+    ]);
+
+    // Create route for restoring all trashed post
+    Route::get('/post/restore/{id}', [
+        'uses' => 'PostsController@restore',
+        'as' => 'posts.restore'
+    ]);
+
+    // Create route for editing posts
+    Route::get('/post/edit/{id}', [
+        'uses' => 'PostsController@edit',
+        'as' => 'posts.edit'
+    ]);
+
+    // Create route for updating posts
+    Route::post('/post/update/{id}', [
+        'uses' => 'PostsController@update',
+        'as' => 'posts.update'
+    ]);
 
     // Create route for category
     Route::get('/category/create', [
@@ -67,7 +90,7 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
     ]);
 
     // Store category details route
-    Route::post('category/store', [
+    Route::post('/category/store', [
         'uses' => 'CategoriesController@store',
         'as' => 'category.store'
     ]);

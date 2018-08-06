@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Cellwatch Board') }}</title>
+    <title>{{ config('app.name', 'Board Management') }}</title>
 
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
@@ -27,7 +27,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Cellwatch Board') }}
+                    {{ config('app.name', 'Board Management') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -46,9 +46,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
+                            </li> --}}
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -83,29 +83,54 @@
                         {{-- Navigation --}}
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="{{route('home')}}">Home</a>
+                                <a href="{{ route('home') }}">Home</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="{{route('categories')}}">Categories</a>
+                                <a href="{{ route('register') }}">Register</a>
                             </li>
-                            <li class="list-group-item">
-                                <a href="{{route('tags')}}">Tags</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{route('tag.create')}}">Create Tag</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{route('posts')}}">All Posts</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{route('posts.trashed')}}">All Trashed Posts</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{route('category.create')}}">Create New Category</a>
-                            </li>
-                            <li class="list-group-item">
-                                <a href="{{route('posts.create')}}">Create New Post</a>
-                            </li>
+
+                            <div class="dropdown list-group-item">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Categories
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="list-group-item">
+                                        <a href="{{route('categories')}}">Categories</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{route('category.create')}}">New Category</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="dropdown list-group-item">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Posts
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="list-group-item">
+                                        <a href="{{route('posts')}}">Posts</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{route('posts.create')}}">New Post</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{route('posts.trashed')}}">Trashed Posts</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="dropdown list-group-item">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Tags
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="list-group-item">
+                                        <a href="{{route('tags')}}">Tags</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{route('tag.create')}}">New Tag</a>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </ul>
                     </div>
 

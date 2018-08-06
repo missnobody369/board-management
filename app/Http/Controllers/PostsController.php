@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use Session;
+use App\Tag;
 use App\Post;
 use App\Category;
 use Illuminate\Http\Request;
@@ -38,8 +39,10 @@ class PostsController extends Controller
             return redirect()->back();
         }
         // Return a particular view create post
-        return view('admin.posts.create')->with('categories', Category::all()); //Location of the file (directory)
         // Passing all categories
+        return view('admin.posts.create')->with('categories', $categories)
+                                         ->with('tags', Tag::all()); //Location of the file (directory)
+        
     }
 
     /**
@@ -57,7 +60,8 @@ class PostsController extends Controller
             'title' => 'required',
             'featured' => 'required|image',
             'content' => 'required',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'tags' => 'required'
         ]);
 
         // dd($request->all());
@@ -75,6 +79,9 @@ class PostsController extends Controller
             'category_id' => $request->category_id,
             'slug' => str_slug($request->title)// Create new Laravel 5.3 project (slug ver) project ===> create-new-laravel-5-3-project
         ]);
+
+        // Attach tags
+        $post->tags()->attach($request->tags);
 
         Session::flash('success','Post Create Successfully!.');
 
@@ -102,7 +109,9 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
 
-        return view('admin.posts.edit')->with('post', $post)->with('categories',Category::all());
+        return view('admin.posts.edit')->with('post', $post)
+                                       ->with('categories',Category::all())
+                                       ->with('tags', Tag::all());
     }
 
     /**
@@ -143,6 +152,9 @@ class PostsController extends Controller
 
         // Save the posts
         $post->save();
+
+        // Call the tags & attached new tags
+        $post->tags()->sync($request->tags);
 
         Session::flash('success','The Post has been updated successfully!.');
 

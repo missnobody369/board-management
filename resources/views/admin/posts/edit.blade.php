@@ -28,10 +28,32 @@
                     <label for="category">Select a Category</label>
                     <select name="category_id" id="category" class="form-control">
                         @foreach($categories as $category)
-                           <option value="{{ $category->id }}">{{ $category->name }}</option>
+                           <option value="{{ $category->id }}"
+                                @if($post->category->id == $category->id)
+                                    selected
+                                @endif
+                            >{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
+
+                <label for="tags">Select Tags</label>
+                <div class="form-check">
+                    @foreach($tags as $tag)
+                        <div class="checkbox">
+                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}" class="form-check-input"
+                                {{-- Checked if post already associated with tag --}}
+                                @foreach($post->tags as $t)
+                                    @if($tag->id == $t->id)
+                                        checked
+                                    @endif
+                                @endforeach
+                            >
+                            <label class="form-check-label">{{ $tag->tag }}</label>
+                        </div>
+                    @endforeach
+                </div>
+
                 <div class="form-group">
                     <label for="featured">Content</label>
                     <textarea name="content" id="content" cols="5" rows="5" class="form-control">{{$post->content}}</textarea>

@@ -91,6 +91,7 @@
                             <li class="list-group-item">
                                 <a href="{{route('user.profile')}}">My Profile</a>
                             </li>
+                            
                             {{-- <li class="list-group-item">
                                 <a href="{{ route('register') }}">Register</a>
                             </li> --}}
@@ -156,6 +157,11 @@
                                 </ul>
                             </div>
 
+                            @if(Auth::user()->admin)
+                                <li class="list-group-item">
+                                    <a href="{{ route('settings') }}">Settings</a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
 

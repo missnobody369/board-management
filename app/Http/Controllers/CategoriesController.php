@@ -113,6 +113,11 @@ class CategoriesController extends Controller
         // Delete category
         $category = Category::find($id);
 
+        //Delete post before category is deleted
+        foreach($category->posts as $post) {
+            $post->forceDelete();
+        }
+
         $category->delete();
 
         Session::flash('success', 'You Successfully Deleted a Category.');

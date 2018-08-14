@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', function(){
+    return App\User::find(1)->profile;
+});
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -154,7 +158,52 @@ Route::group(['prefix'=> 'admin', 'middleware'=>'auth'], function() {
         'uses' => 'TagsController@store',
         'as' => 'tag.store'
     ]);
+    
+    // Route for users profile
+    Route::get('/users', [
+        'uses' => 'UsersController@index',
+        'as' => 'users'
+    ]);
+
+    // Route fro creating user
+    Route::get('/user/create', [
+        'uses' => 'UsersController@create',
+        'as' => 'user.create'
+    ]);
+
+    // Route for Storing user in database
+    Route::post('/user/store', [
+        'uses' => 'UsersController@store',
+        'as' => 'user.store'
+    ]);
+
+    // Delete route 
+    Route::get('user/delete/{id}', [
+        'uses' => 'UsersController@destroy',
+        'as' => 'user.delete'
+    ]);
+
+    // Route making a user admin
+    Route::get('/user/admin/{id}', [
+        'uses' => 'UsersController@admin',
+        'as' => 'user.admin'
+    ]);
+    
+    // Route for make user not admin
+    Route::get('/user/not-admin/{id}', [
+        'uses' => 'UsersController@not_admin',
+        'as' => 'user.not.admin'
+    ]);
+
+    // Route for editing profile
+    Route::get('user/profile', [
+        'uses' => 'ProfilesController@index',
+        'as' => 'user.profile'
+    ]);
+
+    // Route for updating profile
+    Route::post('/user/profile/update', [
+        'uses' => 'ProfilesController@update',
+        'as' => 'user.profile.update'
+    ]);
 });
-
-
-

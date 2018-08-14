@@ -31,17 +31,18 @@ class PostsController extends Controller
     {
 
         $categories = Category::all();
+        $tags = Tag::all();
 
-        if($categories->count() == 0){
+        if($categories->count() == 0 || $tags->count() == 0){
             // Must have a categories before creating post
-            Session::flash('info', 'You must have some categories created first in order to proceed.');
+            Session::flash('info', 'You must have some categories and tags created first in order to proceed.');
 
             return redirect()->back();
         }
         // Return a particular view create post
         // Passing all categories
         return view('admin.posts.create')->with('categories', $categories)
-                                         ->with('tags', Tag::all()); //Location of the file (directory)
+                                         ->with('tags', $tags); //Location of the file (directory)
         
     }
 

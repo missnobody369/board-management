@@ -21,6 +21,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
+    @yield('styles')
+    
 </head>
 <body>
     <div id="app">
@@ -85,9 +87,13 @@
                             <li class="list-group-item">
                                 <a href="{{ route('home') }}">Home</a>
                             </li>
+
                             <li class="list-group-item">
-                                <a href="{{ route('register') }}">Register</a>
+                                <a href="{{route('user.profile')}}">My Profile</a>
                             </li>
+                            {{-- <li class="list-group-item">
+                                <a href="{{ route('register') }}">Register</a>
+                            </li> --}}
 
                             <div class="dropdown list-group-item">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Categories
@@ -101,6 +107,25 @@
                                     </li>
                                 </ul>
                             </div>
+
+                            {{-- Cannot access route if not admin --}}
+                            @if(Auth::user()->admin)
+
+                            <div class="dropdown list-group-item">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Users
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li class="list-group-item">
+                                        <a href="{{ route('users') }}">Users</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ route('user.create') }}">New User</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            @endif
+
 
                             <div class="dropdown list-group-item">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">All Posts
@@ -135,6 +160,8 @@
                     </div>
 
                     @endif
+
+
                     <div class="col-lg-8">
                         @yield('content')
                     </div>
@@ -156,6 +183,6 @@
         @endif
     </script>
 
-    
+    @yield('scripts')
 </body>
 </html>

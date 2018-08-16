@@ -15,9 +15,11 @@ Route::get('/test', function(){
 });
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route for Front end
+Route::get('/', [ 
+    'uses' => 'FrontEndController@index',
+    'as' => 'index'
+]);
 
 Auth::routes();
 
